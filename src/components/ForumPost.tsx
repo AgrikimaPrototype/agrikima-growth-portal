@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,12 +5,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Reply, Send, CheckCircle } from "lucide-react";
-import { ForumPostType, Reply as ReplyType } from "@/pages/FarmerForum";
+import { ForumPost as ForumPostType, ForumReply } from "@/types/database";
 import { toast } from "@/hooks/use-toast";
 
 interface ForumPostProps {
-  post: ForumPostType;
-  onUpdatePost: (post: ForumPostType) => void;
+  post: ForumPostType & { replies: ForumReply[] };
+  onUpdatePost: () => void;
 }
 
 const ForumPost = ({ post, onUpdatePost }: ForumPostProps) => {
@@ -29,21 +28,16 @@ const ForumPost = ({ post, onUpdatePost }: ForumPostProps) => {
       return;
     }
 
-    const newReply: ReplyType = {
-      id: Date.now(),
+    const newReply: ForumReply = {
+      id: Date.now().toString(),
+      post_id: post.id,
       author: replyAuthor,
       content: replyContent,
-      timestamp: new Date().toLocaleString(),
-      isAdminReply: replyAuthor.toLowerCase().includes("agrikima") || replyAuthor.toLowerCase().includes("dr.")
+      created_at: new Date().toISOString(),
+      is_admin_reply: replyAuthor.toLowerCase().includes("agrikima") || replyAuthor.toLowerCase().includes("dr.")
     };
 
-    const updatedPost = {
-      ...post,
-      replies: [...post.replies, newReply],
-      isAnswered: newReply.isAdminReply || post.isAnswered
-    };
-
-    onUpdatePost(updatedPost);
+    onUpdatePost();
     setReplyContent("");
     setReplyAuthor("");
     setShowReplyForm(false);
@@ -60,10 +54,10 @@ const ForumPost = ({ post, onUpdatePost }: ForumPostProps) => {
         <div className="flex justify-between items-start">
           <div className="flex-1">
             <div className="flex items-center space-x-2 mb-2">
-              <Badge variant={post.isAnswered ? "default" : "secondary"} className="text-xs">
+              <Badge variant={post.is_answered ? "default" : "secondary"} className="text-xs">
                 {post.category}
               </Badge>
-              {post.isAnswered && (
+              {post.is_answered && (
                 <Badge className="bg-green-600 text-white text-xs">
                   <CheckCircle className="w-3 h-3 mr-1" />
                   Answered
@@ -72,7 +66,7 @@ const ForumPost = ({ post, onUpdatePost }: ForumPostProps) => {
             </div>
             <CardTitle className="text-lg text-green-800">{post.title}</CardTitle>
             <div className="text-sm text-gray-500 mt-1">
-              by {post.author} • {post.timestamp}
+              by {post.author} • {new Date(post.created_at).toLocaleDateString()}
             </div>
           </div>
         </div>
@@ -92,21 +86,21 @@ const ForumPost = ({ post, onUpdatePost }: ForumPostProps) => {
               <div 
                 key={reply.id} 
                 className={`p-3 rounded-lg ${
-                  reply.isAdminReply 
+                  reply.is_admin_reply 
                     ? "bg-green-50 border-l-4 border-green-500" 
                     : "bg-gray-50"
                 }`}
               >
                 <div className="flex justify-between items-start mb-2">
                   <span className={`font-semibold text-sm ${
-                    reply.isAdminReply ? "text-green-700" : "text-gray-700"
+                    reply.is_admin_reply ? "text-green-700" : "text-gray-700"
                   }`}>
                     {reply.author}
-                    {reply.isAdminReply && (
+                    {reply.is_admin_reply && (
                       <Badge className="ml-2 bg-green-600 text-white text-xs">Expert</Badge>
                     )}
                   </span>
-                  <span className="text-xs text-gray-500">{reply.timestamp}</span>
+                  <span className="text-xs text-gray-500">{new Date(reply.created_at).toLocaleDateString()}</span>
                 </div>
                 <p className="text-sm text-gray-700">{reply.content}</p>
               </div>

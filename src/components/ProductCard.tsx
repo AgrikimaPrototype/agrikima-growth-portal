@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, PiggyBank } from "lucide-react";
-import { Product } from "@/pages/Products";
+import { Product } from "@/types/database";
 
 interface ProductCardProps {
   product: Product;
@@ -74,7 +74,7 @@ const ProductCard = ({ product, onCommentClick }: ProductCardProps) => {
             className="flex items-center space-x-2"
           >
             <MessageCircle className="w-4 h-4" />
-            <span>Comments ({product.comments.length})</span>
+            <span>Comments</span>
           </Button>
         </div>
       </CardContent>
