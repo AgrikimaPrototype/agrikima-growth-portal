@@ -1,5 +1,6 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ForumPost from "@/components/ForumPost";
@@ -10,79 +11,105 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageCircle, Users, Clock, Send } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-
-export interface ForumPostType {
-  id: number;
-  author: string;
-  title: string;
-  content: string;
-  timestamp: string;
-  replies: Reply[];
-  category: string;
-  isAnswered: boolean;
-}
-
-export interface Reply {
-  id: number;
-  author: string;
-  content: string;
-  timestamp: string;
-  isAdminReply: boolean;
-}
+import { supabase } from "@/integrations/supabase/client";
+import { ForumPost as ForumPostType, ForumReply } from "@/types/database";
 
 const FarmerForum = () => {
-  const [posts, setPosts] = useState<ForumPostType[]>([
-    {
-      id: 1,
-      author: "Sarah M. (Kenya)",
-      title: "Newcastle Disease Prevention - Need Advice",
-      content: "My neighbor's chickens recently died from Newcastle disease. What preventive measures should I take to protect my flock? I have 200 birds.",
-      timestamp: "2024-01-15 10:30",
-      category: "Disease Management",
-      isAnswered: true,
-      replies: [
-        {
-          id: 1,
-          author: "Peter K. (Uganda)",
-          content: "I faced the same issue last year. Advice from Agrikima worked perfectly for prevention. Use 1ml per liter of water for 5 days.",
-          timestamp: "2024-01-15 11:15",
-          isAdminReply: false
-        },
-        {
-          id: 2,
-          author: "Dr. James - Agrikima Expert",
-          content: "Thank you for the question. For Newcastle prevention, I recommend our Advice product at 1ml/L in drinking water for 5 consecutive days monthly. Also ensure proper vaccination schedule and biosecurity measures.",
-          timestamp: "2024-01-15 14:30",
-          isAdminReply: true
-        }
-      ]
-    },
-    {
-      id: 2,
-      author: "Michael T. (Tanzania)",
-      title: "Organic Fertilizer Application Timing",
-      content: "When is the best time to apply organic fertilizer for maize farming? I'm planning to plant next month and want to ensure maximum yield.",
-      timestamp: "2024-01-14 16:45",
-      category: "Crop Management",
-      isAnswered: false,
-      replies: [
-        {
-          id: 1,
-          author: "Grace N. (Rwanda)",
-          content: "From my experience, apply 2 weeks before planting. This gives time for soil integration.",
-          timestamp: "2024-01-14 18:20",
-          isAdminReply: false
-        }
-      ]
-    }
-  ]);
-
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostContent, setNewPostContent] = useState("");
   const [newPostAuthor, setNewPostAuthor] = useState("");
   const [newPostCategory, setNewPostCategory] = useState("General");
+  const queryClient = useQueryClient();
 
   const categories = ["General", "Disease Management", "Crop Management", "Nutrition", "Business", "Organic Farming"];
+
+  const { data: posts, isLoading } = useQuery({
+    queryKey: ['forum-posts'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('forum_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data as ForumPostType[];
+    }
+  });
+
+  const { data: replies } = useQuery({
+    queryKey: ['forum-replies'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('forum_replies')
+        .select('*')
+        .order('created_at', { ascending: true });
+      
+      if (error) throw error;
+      return data as ForumReply[];
+    }
+  });
+
+  // Real-time subscriptions
+  useEffect(() => {
+    const postsChannel = supabase
+      .channel('forum-posts-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'forum_posts'
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
+        }
+      )
+      .subscribe();
+
+    const repliesChannel = supabase
+      .channel('forum-replies-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'forum_replies'
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['forum-replies'] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(postsChannel);
+      supabase.removeChannel(repliesChannel);
+    };
+  }, [queryClient]);
+
+  const createPostMutation = useMutation({
+    mutationFn: async (postData: any) => {
+      const { data, error } = await supabase
+        .from('forum_posts')
+        .insert([postData])
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
+      setNewPostTitle("");
+      setNewPostContent("");
+      setNewPostAuthor("");
+      setNewPostCategory("General");
+      toast({
+        title: "Question Posted!",
+        description: "Your question has been posted. Our experts will respond soon.",
+      });
+    }
+  });
 
   const handleSubmitPost = () => {
     if (!newPostTitle.trim() || !newPostContent.trim() || !newPostAuthor.trim()) {
@@ -94,31 +121,31 @@ const FarmerForum = () => {
       return;
     }
 
-    const newPost: ForumPostType = {
-      id: Date.now(),
+    createPostMutation.mutate({
       author: newPostAuthor,
       title: newPostTitle,
       content: newPostContent,
-      timestamp: new Date().toLocaleString(),
       category: newPostCategory,
-      isAnswered: false,
-      replies: []
-    };
-
-    setPosts([newPost, ...posts]);
-    setNewPostTitle("");
-    setNewPostContent("");
-    setNewPostAuthor("");
-    setNewPostCategory("General");
-
-    toast({
-      title: "Question Posted!",
-      description: "Your question has been posted. Our experts will respond soon.",
     });
   };
 
+  // Group replies by post ID
+  const repliesByPost = replies?.reduce((acc, reply) => {
+    if (!acc[reply.post_id]) {
+      acc[reply.post_id] = [];
+    }
+    acc[reply.post_id].push(reply);
+    return acc;
+  }, {} as Record<string, ForumReply[]>) || {};
+
+  // Enhanced posts with replies
+  const enhancedPosts = posts?.map(post => ({
+    ...post,
+    replies: repliesByPost[post.id] || []
+  })) || [];
+
   const stats = [
-    { icon: MessageCircle, label: "Total Questions", value: posts.length.toString() },
+    { icon: MessageCircle, label: "Total Questions", value: posts?.length?.toString() || "0" },
     { icon: Users, label: "Active Farmers", value: "150+" },
     { icon: Clock, label: "Avg Response Time", value: "< 4 hrs" }
   ];
@@ -129,7 +156,7 @@ const FarmerForum = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl font-bold text-green-800 mb-4">Farmer Forum</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Connect with fellow farmers and our agricultural experts. Ask questions, share experiences, and learn together.
@@ -137,7 +164,7 @@ const FarmerForum = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 animate-fade-in">
           {stats.map((stat, index) => (
             <Card key={index} className="text-center border-green-200">
               <CardContent className="p-6">
@@ -152,7 +179,7 @@ const FarmerForum = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Post Question Form */}
           <div className="lg:col-span-1">
-            <Card className="border-green-200 sticky top-24">
+            <Card className="border-green-200 sticky top-24 animate-slide-in-right">
               <CardHeader>
                 <CardTitle className="text-green-700">Ask a Question</CardTitle>
                 <CardDescription>
@@ -200,9 +227,13 @@ const FarmerForum = () => {
                     rows={5}
                   />
                 </div>
-                <Button onClick={handleSubmitPost} className="w-full">
+                <Button 
+                  onClick={handleSubmitPost} 
+                  className="w-full bg-green-600 hover:bg-green-700"
+                  disabled={createPostMutation.isPending}
+                >
                   <Send className="mr-2 w-4 h-4" />
-                  Post Question
+                  {createPostMutation.isPending ? "Posting..." : "Post Question"}
                 </Button>
               </CardContent>
             </Card>
@@ -211,7 +242,18 @@ const FarmerForum = () => {
           {/* Forum Posts */}
           <div className="lg:col-span-2 space-y-6">
             <h2 className="text-2xl font-bold text-green-800">Recent Discussions</h2>
-            {posts.length === 0 ? (
+            {isLoading ? (
+              <div className="space-y-4">
+                {[...Array(3)].map((_, i) => (
+                  <Card key={i} className="animate-pulse">
+                    <CardContent className="p-6">
+                      <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                      <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : enhancedPosts.length === 0 ? (
               <Card>
                 <CardContent className="p-8 text-center">
                   <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
@@ -219,12 +261,13 @@ const FarmerForum = () => {
                 </CardContent>
               </Card>
             ) : (
-              posts.map((post) => (
+              enhancedPosts.map((post) => (
                 <ForumPost
                   key={post.id}
                   post={post}
-                  onUpdatePost={(updatedPost) => {
-                    setPosts(posts.map(p => p.id === updatedPost.id ? updatedPost : p));
+                  onUpdatePost={() => {
+                    queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
+                    queryClient.invalidateQueries({ queryKey: ['forum-replies'] });
                   }}
                 />
               ))

@@ -9,13 +9,181 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      admin_users: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_active: boolean
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_active?: boolean
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_active?: boolean
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      comments: {
+        Row: {
+          author: string
+          content: string
+          created_at: string
+          id: string
+          likes: number
+          product_id: string | null
+        }
+        Insert: {
+          author: string
+          content: string
+          created_at?: string
+          id?: string
+          likes?: number
+          product_id?: string | null
+        }
+        Update: {
+          author?: string
+          content?: string
+          created_at?: string
+          id?: string
+          likes?: number
+          product_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_posts: {
+        Row: {
+          author: string
+          category: string
+          content: string
+          created_at: string
+          id: string
+          is_answered: boolean
+          title: string
+        }
+        Insert: {
+          author: string
+          category?: string
+          content: string
+          created_at?: string
+          id?: string
+          is_answered?: boolean
+          title: string
+        }
+        Update: {
+          author?: string
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_answered?: boolean
+          title?: string
+        }
+        Relationships: []
+      }
+      forum_replies: {
+        Row: {
+          author: string
+          content: string
+          created_at: string
+          id: string
+          is_admin_reply: boolean
+          post_id: string | null
+        }
+        Insert: {
+          author: string
+          content: string
+          created_at?: string
+          id?: string
+          is_admin_reply?: boolean
+          post_id?: string | null
+        }
+        Update: {
+          author?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_admin_reply?: boolean
+          post_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_replies_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "forum_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          benefits: string[]
+          category: string
+          created_at: string
+          description: string
+          id: string
+          image: string
+          name: string
+          packaging: string[]
+          price: string
+          updated_at: string
+          usage: string
+        }
+        Insert: {
+          benefits?: string[]
+          category: string
+          created_at?: string
+          description: string
+          id?: string
+          image: string
+          name: string
+          packaging?: string[]
+          price: string
+          updated_at?: string
+          usage: string
+        }
+        Update: {
+          benefits?: string[]
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image?: string
+          name?: string
+          packaging?: string[]
+          price?: string
+          updated_at?: string
+          usage?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: {
+        Args: { user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
