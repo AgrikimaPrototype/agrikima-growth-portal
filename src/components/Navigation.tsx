@@ -24,10 +24,10 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-bold text-yellow-400">
+            <div className="text-2xl font-bold text-amber-100">
               Agrikima
             </div>
-            <div className="text-sm text-green-200">Making Growth Happen</div>
+            <div className="text-sm text-stone-200">Making Growth Happen</div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -38,8 +38,8 @@ const Navigation = () => {
                 to={link.href}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   isActive(link.href)
-                    ? "bg-green-700 text-yellow-400"
-                    : "hover:bg-green-700 hover:text-yellow-300"
+                    ? "bg-green-700 text-amber-100"
+                    : "hover:bg-green-700 hover:text-stone-200"
                 }`}
               >
                 {link.label}
@@ -70,8 +70,8 @@ const Navigation = () => {
                   to={link.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     isActive(link.href)
-                      ? "bg-green-600 text-yellow-400"
-                      : "hover:bg-green-600 hover:text-yellow-300"
+                      ? "bg-green-600 text-amber-100"
+                      : "hover:bg-green-600 hover:text-stone-200"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
