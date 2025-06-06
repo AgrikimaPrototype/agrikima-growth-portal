@@ -19,6 +19,7 @@ export interface Comment {
   author: string;
   content: string;
   likes: number;
+  is_admin_reply: boolean;
   created_at: string;
 }
 

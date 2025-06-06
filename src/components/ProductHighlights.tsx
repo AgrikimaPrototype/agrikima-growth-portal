@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { PiggyBank } from "lucide-react";
+import { HeartHandshake } from "lucide-react";
 
 const ProductHighlights = () => {
   const featuredProducts = [
@@ -37,10 +37,10 @@ const ProductHighlights = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-green-50 to-yellow-50">
+    <section className="py-20 bg-gradient-to-b from-emerald-50/80 to-amber-50/80 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-green-800 mb-4">
+          <h2 className="text-4xl font-bold text-emerald-800 mb-4">
             Our Flagship Products
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -50,30 +50,30 @@ const ProductHighlights = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
           {featuredProducts.map((product, index) => (
-            <Card key={index} className="border-green-200 hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <Card key={index} className="agricultural-card hover:scale-105 transition-all duration-300">
               <div className="relative overflow-hidden rounded-t-lg">
                 <img 
                   src={product.image}
                   alt={product.name}
                   className="w-full h-48 object-cover"
                 />
-                <div className="absolute top-4 right-4 bg-yellow-500 text-green-900 px-3 py-1 rounded-full text-sm font-semibold">
+                <div className="absolute top-4 right-4 bg-amber-500 text-emerald-900 px-3 py-1 rounded-full text-sm font-semibold">
                   {product.category}
                 </div>
               </div>
               <CardHeader>
-                <CardTitle className="text-green-700 text-xl">{product.name}</CardTitle>
+                <CardTitle className="text-emerald-700 text-xl">{product.name}</CardTitle>
                 <CardDescription className="text-gray-600">
                   {product.description}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-green-800">Key Benefits:</h4>
+                  <h4 className="font-semibold text-emerald-800">Key Benefits:</h4>
                   <ul className="space-y-1">
                     {product.benefits.map((benefit, idx) => (
                       <li key={idx} className="text-sm text-gray-600 flex items-center">
-                        <span className="text-green-500 mr-2">✓</span>
+                        <span className="text-emerald-500 mr-2">✓</span>
                         {benefit}
                       </li>
                     ))}
@@ -86,14 +86,14 @@ const ProductHighlights = () => {
 
         <div className="text-center">
           <Link to="/products">
-            <Button size="lg" className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 text-lg">
-              <PiggyBank className="mr-2" />
-              View All Products
+            <Button size="lg" className="btn-agricultural flex items-center space-x-2">
+              <HeartHandshake className="w-5 h-5" />
+              <span>View All Products</span>
             </Button>
           </Link>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -9,7 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageCircle, Users, Clock, Send } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { MessageCircle, Users, Clock, Send, Filter } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ForumPost as ForumPostType, ForumReply } from "@/types/database";
@@ -19,6 +20,7 @@ const FarmerForum = () => {
   const [newPostContent, setNewPostContent] = useState("");
   const [newPostAuthor, setNewPostAuthor] = useState("");
   const [newPostCategory, setNewPostCategory] = useState("General");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const queryClient = useQueryClient();
 
   const categories = ["General", "Disease Management", "Crop Management", "Nutrition", "Business", "Organic Farming"];
@@ -138,11 +140,16 @@ const FarmerForum = () => {
     return acc;
   }, {} as Record<string, ForumReply[]>) || {};
 
+  // Filter posts by category
+  const filteredPosts = posts?.filter(post => 
+    selectedCategory === "All" || post.category === selectedCategory
+  ) || [];
+
   // Enhanced posts with replies
-  const enhancedPosts = posts?.map(post => ({
+  const enhancedPosts = filteredPosts.map(post => ({
     ...post,
     replies: repliesByPost[post.id] || []
-  })) || [];
+  }));
 
   const stats = [
     { icon: MessageCircle, label: "Total Questions", value: posts?.length?.toString() || "0" },
@@ -151,13 +158,13 @@ const FarmerForum = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-yellow-50">
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-amber-50">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl font-bold text-green-800 mb-4">Farmer Forum</h1>
+          <h1 className="text-4xl font-bold text-emerald-800 mb-4">Farmer Forum</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Connect with fellow farmers and our agricultural experts. Ask questions, share experiences, and learn together.
           </p>
@@ -166,22 +173,52 @@ const FarmerForum = () => {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 animate-fade-in">
           {stats.map((stat, index) => (
-            <Card key={index} className="text-center border-green-200">
+            <Card key={index} className="text-center border-emerald-200 bg-white/80 backdrop-blur-sm">
               <CardContent className="p-6">
-                <stat.icon className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-green-800">{stat.value}</div>
+                <stat.icon className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
+                <div className="text-2xl font-bold text-emerald-800">{stat.value}</div>
                 <div className="text-gray-600">{stat.label}</div>
               </CardContent>
             </Card>
           ))}
         </div>
 
+        {/* Category Filter */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-2 mb-4">
+            <Filter className="w-5 h-5 text-emerald-600" />
+            <h3 className="text-lg font-semibold text-emerald-800">Filter by Category</h3>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Badge 
+              variant={selectedCategory === "All" ? "default" : "outline"}
+              className={`cursor-pointer px-4 py-2 ${selectedCategory === "All" ? "bg-emerald-600" : "hover:bg-emerald-100"}`}
+              onClick={() => setSelectedCategory("All")}
+            >
+              All ({posts?.length || 0})
+            </Badge>
+            {categories.map((category) => {
+              const count = posts?.filter(p => p.category === category).length || 0;
+              return (
+                <Badge 
+                  key={category}
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  className={`cursor-pointer px-4 py-2 ${selectedCategory === category ? "bg-emerald-600" : "hover:bg-emerald-100"}`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category} ({count})
+                </Badge>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Post Question Form */}
           <div className="lg:col-span-1">
-            <Card className="border-green-200 sticky top-24 animate-slide-in-right">
+            <Card className="border-emerald-200 sticky top-24 animate-slide-in-right bg-white/90 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-green-700">Ask a Question</CardTitle>
+                <CardTitle className="text-emerald-700">Ask a Question</CardTitle>
                 <CardDescription>
                   Get expert advice from Agrikima specialists and experienced farmers
                 </CardDescription>
@@ -194,12 +231,13 @@ const FarmerForum = () => {
                     placeholder="e.g., John K. (Kenya)"
                     value={newPostAuthor}
                     onChange={(e) => setNewPostAuthor(e.target.value)}
+                    className="bg-white/80"
                   />
                 </div>
                 <div>
                   <Label htmlFor="category">Category</Label>
                   <select
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 border border-gray-300 rounded-md bg-white/80"
                     value={newPostCategory}
                     onChange={(e) => setNewPostCategory(e.target.value)}
                   >
@@ -215,6 +253,7 @@ const FarmerForum = () => {
                     placeholder="Brief title for your question"
                     value={newPostTitle}
                     onChange={(e) => setNewPostTitle(e.target.value)}
+                    className="bg-white/80"
                   />
                 </div>
                 <div>
@@ -225,11 +264,12 @@ const FarmerForum = () => {
                     value={newPostContent}
                     onChange={(e) => setNewPostContent(e.target.value)}
                     rows={5}
+                    className="bg-white/80"
                   />
                 </div>
                 <Button 
                   onClick={handleSubmitPost} 
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700"
                   disabled={createPostMutation.isPending}
                 >
                   <Send className="mr-2 w-4 h-4" />
@@ -241,7 +281,9 @@ const FarmerForum = () => {
 
           {/* Forum Posts */}
           <div className="lg:col-span-2 space-y-6">
-            <h2 className="text-2xl font-bold text-green-800">Recent Discussions</h2>
+            <h2 className="text-2xl font-bold text-emerald-800">
+              {selectedCategory === "All" ? "Recent Discussions" : `${selectedCategory} Discussions`}
+            </h2>
             {isLoading ? (
               <div className="space-y-4">
                 {[...Array(3)].map((_, i) => (
@@ -257,7 +299,12 @@ const FarmerForum = () => {
               <Card>
                 <CardContent className="p-8 text-center">
                   <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">No questions yet. Be the first to ask!</p>
+                  <p className="text-gray-600">
+                    {selectedCategory === "All" 
+                      ? "No questions yet. Be the first to ask!" 
+                      : `No questions in ${selectedCategory} category yet.`
+                    }
+                  </p>
                 </CardContent>
               </Card>
             ) : (

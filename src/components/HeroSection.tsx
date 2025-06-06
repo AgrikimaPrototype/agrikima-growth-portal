@@ -1,27 +1,20 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { PiggyBank, Youtube } from "lucide-react";
+import { HeartHandshake, Youtube, Tractor } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-r from-green-800/90 to-yellow-600/90 text-white">
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-        style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1472396961693-142e6e269027?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')"
-        }}
-      />
-      
+    <section className="relative min-h-screen flex items-center justify-center">
       <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-yellow-400">
+        <div className="animate-fade-in agricultural-card p-12 rounded-3xl">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-emerald-800">
             AGRIKIMA
           </h1>
-          <p className="text-2xl md:text-4xl mb-4 font-semibold">
+          <p className="text-2xl md:text-4xl mb-4 font-semibold text-amber-700">
             Making Growth Happen
           </p>
-          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed text-gray-700">
             Distinguished leader in organic animal health solutions and sustainable crop management across five continents
           </p>
           
@@ -29,31 +22,32 @@ const HeroSection = () => {
             <Link to="/products">
               <Button 
                 size="lg" 
-                className="bg-yellow-500 hover:bg-yellow-600 text-green-900 font-semibold px-8 py-4 text-lg"
+                className="btn-agricultural flex items-center space-x-2"
               >
-                <PiggyBank className="mr-2" />
-                Explore Products
+                <HeartHandshake className="w-5 h-5" />
+                <span>Explore Products</span>
               </Button>
             </Link>
             <Link to="/farmer-forum">
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-green-900 px-8 py-4 text-lg"
+                className="border-emerald-600 text-emerald-700 hover:bg-emerald-50 px-8 py-4 text-lg font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
               >
-                Join Farmer Forum
+                <Tractor className="w-5 h-5" />
+                <span>Join Farmer Forum</span>
               </Button>
             </Link>
           </div>
 
           <div className="flex justify-center items-center space-x-8 text-sm opacity-90">
-            <div className="flex items-center space-x-2">
-              <Youtube className="w-5 h-5 text-red-400" />
+            <div className="flex items-center space-x-2 text-emerald-700">
+              <Youtube className="w-5 h-5 text-red-500" />
               <span>Watch Our Story</span>
             </div>
-            <div className="text-yellow-300">🌱 90+ Products</div>
-            <div className="text-yellow-300">🌍 5+ Continents</div>
-            <div className="text-yellow-300">🏭 3 Manufacturing Facilities</div>
+            <div className="text-amber-700 font-medium">🌱 90+ Products</div>
+            <div className="text-emerald-700 font-medium">🌍 5+ Continents</div>
+            <div className="text-amber-700 font-medium">🏭 3 Manufacturing Facilities</div>
           </div>
         </div>
       </div>
