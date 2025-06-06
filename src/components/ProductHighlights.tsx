@@ -93,7 +93,7 @@ const ProductHighlights = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
