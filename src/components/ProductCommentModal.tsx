@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Send, User } from "lucide-react";
 import { Product, Comment } from "@/types/database";
 import { toast } from "@/hooks/use-toast";
@@ -35,8 +34,9 @@ const ProductCommentModal = ({ product, isOpen, onClose }: ProductCommentModalPr
       product_id: product?.id || "",
       author: authorName,
       content: newComment,
+      likes: 0, // Add the missing likes property
+      is_admin_reply: false,
       created_at: new Date().toISOString(),
-      is_admin_reply: false
     };
 
     setComments([...comments, comment]);
