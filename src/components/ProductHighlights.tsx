@@ -15,7 +15,7 @@ const ProductHighlights = () => {
     },
     {
       name: "Biogar",
-      category: "Gut Health Enhancement",
+      category: "Gut Health Enhancement", 
       description: "Garlic extract that improves gut health leading to early cropping and better bird performance",
       benefits: ["Improved gut health", "Early harvesting", "Better feed conversion"],
       image: "https://images.unsplash.com/photo-1485833077593-4278bba3f11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
@@ -57,7 +57,7 @@ const ProductHighlights = () => {
                   alt={product.name}
                   className="w-full h-48 object-cover"
                 />
-                <div className="absolute top-4 right-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                <div className="absolute top-4 right-4 bg-stone-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
                   {product.category}
                 </div>
               </div>

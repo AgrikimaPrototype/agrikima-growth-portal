@@ -11,7 +11,7 @@ const HeroSection = () => {
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-green-800">
             AGRIKIMA
           </h1>
-          <p className="text-2xl md:text-4xl mb-4 font-semibold text-amber-800">
+          <p className="text-2xl md:text-4xl mb-4 font-semibold text-stone-800">
             Making Growth Happen
           </p>
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed text-stone-700">
@@ -45,9 +45,9 @@ const HeroSection = () => {
               <Youtube className="w-5 h-5 text-red-500" />
               <span>Watch Our Story</span>
             </div>
-            <div className="text-amber-800 font-medium">🌱 90+ Products</div>
+            <div className="text-stone-800 font-medium">🌱 90+ Products</div>
             <div className="text-green-700 font-medium">🌍 5+ Continents</div>
-            <div className="text-amber-800 font-medium">🏭 3 Manufacturing Facilities</div>
+            <div className="text-stone-800 font-medium">🏭 3 Manufacturing Facilities</div>
           </div>
         </div>
       </div>

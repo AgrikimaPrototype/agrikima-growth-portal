@@ -10,8 +10,8 @@ import { toast } from "@/hooks/use-toast";
 import { Shield, Leaf } from "lucide-react";
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("agrikimaprototype6@gmail.com");
+  const [password, setPassword] = useState("Insideout.co.ke(1906)");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -20,105 +20,72 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      console.log("Attempting login with:", { email });
+      console.log("Attempting login with email:", email);
       
-      // First authenticate with Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      // Try to sign in first
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      console.log("Auth response:", { authData, authError });
+      console.log("SignIn result:", { signInData, signInError });
 
-      if (authError) {
-        // If user doesn't exist, try to create them
-        if (authError.message.includes('Invalid login credentials')) {
-          console.log("User not found, attempting to create admin user...");
+      if (signInError) {
+        // If login fails, try to sign up
+        if (signInError.message.includes('Invalid login credentials')) {
+          console.log("Login failed, attempting signup...");
           
           const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
             email,
             password,
           });
 
-          console.log("SignUp response:", { signUpData, signUpError });
+          console.log("SignUp result:", { signUpData, signUpError });
 
-          if (signUpError) throw signUpError;
+          if (signUpError) {
+            throw new Error(`Signup failed: ${signUpError.message}`);
+          }
 
           if (signUpData.user) {
-            // Add to admin_users table
-            const { error: adminError } = await supabase
-              .from('admin_users')
-              .insert({
-                user_id: signUpData.user.id,
-                email: email,
-                is_active: true
-              });
-
-            if (adminError) {
-              console.log("Admin insert error:", adminError);
-              // If admin already exists, that's okay
-              if (!adminError.message.includes('duplicate')) {
-                throw adminError;
-              }
-            }
-
             toast({
-              title: "Admin Account Created",
-              description: "Admin account created successfully. Please check your email for verification.",
+              title: "Account Created",
+              description: "Admin account created successfully. You can now login.",
+            });
+            
+            // Now try to login again
+            const { data: retrySignIn, error: retryError } = await supabase.auth.signInWithPassword({
+              email,
+              password,
             });
 
-            navigate('/admin/dashboard');
-            return;
+            if (retryError) {
+              throw new Error(`Login after signup failed: ${retryError.message}`);
+            }
+
+            if (retrySignIn.user) {
+              navigate('/admin/dashboard');
+              return;
+            }
           }
+        } else {
+          throw new Error(`Login failed: ${signInError.message}`);
         }
-        throw authError;
+      } else if (signInData.user) {
+        // Login was successful
+        console.log("Login successful for user:", signInData.user.id);
+        
+        toast({
+          title: "Login Successful",
+          description: "Welcome to the admin panel!",
+        });
+
+        navigate('/admin/dashboard');
       }
-
-      if (!authData.user) {
-        throw new Error('No user data returned');
-      }
-
-      // Check if user is admin
-      const { data: adminData, error: adminError } = await supabase
-        .from('admin_users')
-        .select('*')
-        .eq('email', email)
-        .eq('is_active', true)
-        .single();
-
-      console.log("Admin check:", { adminData, adminError });
-
-      if (adminError && adminError.code !== 'PGRST116') {
-        throw adminError;
-      }
-
-      if (!adminData) {
-        // Create admin entry if it doesn't exist
-        const { error: insertError } = await supabase
-          .from('admin_users')
-          .insert({
-            user_id: authData.user.id,
-            email: email,
-            is_active: true
-          });
-
-        if (insertError && !insertError.message.includes('duplicate')) {
-          console.log("Failed to create admin entry:", insertError);
-          throw new Error('Failed to create admin entry');
-        }
-      }
-
-      toast({
-        title: "Login Successful",
-        description: "Welcome to the admin panel!",
-      });
-
-      navigate('/admin/dashboard');
     } catch (error: any) {
-      console.error("Login error:", error);
+      console.error("Authentication error:", error);
       toast({
-        title: "Login Failed",
-        description: error.message || "An error occurred during login",
+        title: "Authentication Failed",
+        description: error.message || "An error occurred during authentication",
         variant: "destructive",
       });
     } finally {
@@ -127,7 +94,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-700 to-amber-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-700 to-stone-800 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/20"></div>
       
       <Card className="w-full max-w-md relative z-10 border-green-200 shadow-2xl">
@@ -175,12 +142,12 @@ const AdminLogin = () => {
               className="w-full bg-green-600 hover:bg-green-700"
               disabled={loading}
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? "Authenticating..." : "Sign In"}
             </Button>
           </form>
           
           <div className="mt-4 text-center text-sm text-stone-600">
-            <p>Admin credentials:</p>
+            <p>Default credentials:</p>
             <p>Email: agrikimaprototype6@gmail.com</p>
             <p>Password: Insideout.co.ke(1906)</p>
           </div>
