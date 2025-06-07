@@ -54,14 +54,14 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-yellow-50">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-green-800 mb-4">Contact Us</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-4xl font-bold text-blue-800 mb-4">Contact Us</h1>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Get in touch with our agricultural experts. We're here to support your farming journey.
           </p>
         </div>
@@ -69,9 +69,9 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="space-y-8">
-            <Card className="border-green-200">
+            <Card className="border-blue-200">
               <CardHeader>
-                <CardTitle className="text-green-800 flex items-center">
+                <CardTitle className="text-blue-800 flex items-center">
                   <MapPin className="mr-2" />
                   Africa Office - Nairobi, Kenya
                 </CardTitle>
@@ -79,35 +79,35 @@ const Contact = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-start space-x-3">
-                  <MapPin className="w-5 h-5 text-green-600 mt-1" />
+                  <MapPin className="w-5 h-5 text-blue-600 mt-1" />
                   <div>
                     <p className="font-semibold">Address</p>
-                    <p className="text-gray-600">Sky Park Plaza Westlands</p>
-                    <p className="text-gray-600">P.O. Box 7773, 00200 Nairobi, Kenya</p>
+                    <p className="text-slate-600">Sky Park Plaza Westlands</p>
+                    <p className="text-slate-600">P.O. Box 7773, 00200 Nairobi, Kenya</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Phone className="w-5 h-5 text-green-600 mt-1" />
+                  <Phone className="w-5 h-5 text-blue-600 mt-1" />
                   <div>
                     <p className="font-semibold">Phone</p>
-                    <p className="text-gray-600">+254 20 208 9181</p>
-                    <p className="text-gray-600">+254 20 208 9182</p>
-                    <p className="text-gray-600">+254 (0) 111 410 639</p>
+                    <p className="text-slate-600">+254 20 208 9181</p>
+                    <p className="text-slate-600">+254 20 208 9182</p>
+                    <p className="text-slate-600">+254 (0) 111 410 639</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Mail className="w-5 h-5 text-green-600 mt-1" />
+                  <Mail className="w-5 h-5 text-blue-600 mt-1" />
                   <div>
                     <p className="font-semibold">Email</p>
-                    <p className="text-gray-600">Info@agrikima.co.ke</p>
+                    <p className="text-slate-600">Info@agrikima.co.ke</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-green-200">
+            <Card className="border-blue-200">
               <CardHeader>
-                <CardTitle className="text-green-800 flex items-center">
+                <CardTitle className="text-blue-800 flex items-center">
                   <MapPin className="mr-2" />
                   Manufacturing Facility - Malaysia
                 </CardTitle>
@@ -115,24 +115,24 @@ const Contact = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-start space-x-3">
-                  <MapPin className="w-5 h-5 text-green-600 mt-1" />
+                  <MapPin className="w-5 h-5 text-blue-600 mt-1" />
                   <div>
                     <p className="font-semibold">Address</p>
-                    <p className="text-gray-600">A63, Jalan FZ2, Precint 3</p>
-                    <p className="text-gray-600">KS12 42920, Klang, Selangor, Malaysia</p>
+                    <p className="text-slate-600">A63, Jalan FZ2, Precint 3</p>
+                    <p className="text-slate-600">KS12 42920, Klang, Selangor, Malaysia</p>
                   </div>
                 </div>
-                <div className="bg-green-50 p-3 rounded-lg">
-                  <p className="text-sm text-green-700">
+                <div className="bg-blue-50 p-3 rounded-lg">
+                  <p className="text-sm text-blue-700">
                     <strong>Strategic Location:</strong> Located in Port Klang for seamless global shipping
                   </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-green-200">
+            <Card className="border-blue-200">
               <CardHeader>
-                <CardTitle className="text-green-800 flex items-center">
+                <CardTitle className="text-blue-800 flex items-center">
                   <Clock className="mr-2" />
                   Business Hours
                 </CardTitle>
@@ -151,7 +151,7 @@ const Contact = () => {
                     <span>Sunday:</span>
                     <span className="font-semibold">Closed</span>
                   </div>
-                  <div className="text-sm text-green-600 mt-3">
+                  <div className="text-sm text-blue-600 mt-3">
                     Emergency support available 24/7 for urgent farming needs
                   </div>
                 </div>
@@ -161,9 +161,9 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div>
-            <Card className="border-green-200">
+            <Card className="border-blue-200">
               <CardHeader>
-                <CardTitle className="text-green-800">Send us a Message</CardTitle>
+                <CardTitle className="text-blue-800">Send us a Message</CardTitle>
                 <CardDescription>
                   Fill out the form below and our team will get back to you within 24 hours
                 </CardDescription>
@@ -180,6 +180,7 @@ const Contact = () => {
                         onChange={handleInputChange}
                         placeholder="Your full name"
                         required
+                        className="border-slate-300 focus:border-blue-500"
                       />
                     </div>
                     <div>
@@ -192,6 +193,7 @@ const Contact = () => {
                         onChange={handleInputChange}
                         placeholder="your.email@example.com"
                         required
+                        className="border-slate-300 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -205,6 +207,7 @@ const Contact = () => {
                         value={formData.phone}
                         onChange={handleInputChange}
                         placeholder="+254 XXX XXX XXX"
+                        className="border-slate-300 focus:border-blue-500"
                       />
                     </div>
                     <div>
@@ -215,6 +218,7 @@ const Contact = () => {
                         value={formData.company}
                         onChange={handleInputChange}
                         placeholder="Your farm or company name"
+                        className="border-slate-300 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -226,7 +230,7 @@ const Contact = () => {
                       name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      className="w-full p-2 border border-gray-300 rounded-md"
+                      className="w-full p-2 border border-slate-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     >
                       <option value="">Select a subject</option>
                       <option value="product-inquiry">Product Inquiry</option>
@@ -248,10 +252,11 @@ const Contact = () => {
                       placeholder="Tell us about your farming needs, challenges, or how we can help you..."
                       rows={6}
                       required
+                      className="border-slate-300 focus:border-blue-500"
                     />
                   </div>
 
-                  <Button type="submit" className="w-full" size="lg">
+                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" size="lg">
                     <Send className="mr-2 w-4 h-4" />
                     Send Message
                   </Button>
@@ -261,20 +266,20 @@ const Contact = () => {
 
             {/* Quick Contact Options */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="border-green-200 text-center">
+              <Card className="border-blue-200 text-center">
                 <CardContent className="p-4">
-                  <Phone className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                  <h3 className="font-semibold text-green-800">Call Us</h3>
-                  <p className="text-sm text-gray-600">Immediate assistance</p>
-                  <p className="text-green-600 font-semibold">+254 20 208 9181</p>
+                  <Phone className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                  <h3 className="font-semibold text-blue-800">Call Us</h3>
+                  <p className="text-sm text-slate-600">Immediate assistance</p>
+                  <p className="text-blue-600 font-semibold">+254 20 208 9181</p>
                 </CardContent>
               </Card>
-              <Card className="border-green-200 text-center">
+              <Card className="border-blue-200 text-center">
                 <CardContent className="p-4">
-                  <Mail className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                  <h3 className="font-semibold text-green-800">Email Us</h3>
-                  <p className="text-sm text-gray-600">Detailed inquiries</p>
-                  <p className="text-green-600 font-semibold">Info@agrikima.co.ke</p>
+                  <Mail className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                  <h3 className="font-semibold text-blue-800">Email Us</h3>
+                  <p className="text-sm text-slate-600">Detailed inquiries</p>
+                  <p className="text-blue-600 font-semibold">Info@agrikima.co.ke</p>
                 </CardContent>
               </Card>
             </div>

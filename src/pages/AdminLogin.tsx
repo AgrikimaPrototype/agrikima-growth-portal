@@ -22,6 +22,7 @@ const AdminLogin = () => {
     try {
       console.log("Attempting login with email:", email);
       
+      // First try to sign in
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -30,44 +31,42 @@ const AdminLogin = () => {
       console.log("SignIn result:", { signInData, signInError });
 
       if (signInError) {
-        if (signInError.message.includes('Invalid login credentials')) {
-          console.log("Login failed, attempting signup...");
-          
-          const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-            email,
-            password,
-          });
-
-          console.log("SignUp result:", { signUpData, signUpError });
-
-          if (signUpError) {
-            throw new Error(`Signup failed: ${signUpError.message}`);
+        // If sign in fails, try to sign up the user
+        console.log("Login failed, attempting signup...");
+        
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/admin/dashboard`
           }
+        });
 
-          if (signUpData.user) {
-            toast({
-              title: "Account Created",
-              description: "Admin account created successfully. You can now login.",
-            });
-            
-            const { data: retrySignIn, error: retryError } = await supabase.auth.signInWithPassword({
-              email,
-              password,
-            });
+        console.log("SignUp result:", { signUpData, signUpError });
 
-            if (retryError) {
-              throw new Error(`Login after signup failed: ${retryError.message}`);
-            }
-
-            if (retrySignIn.user) {
-              navigate('/admin/dashboard');
-              return;
-            }
-          }
-        } else {
-          throw new Error(`Login failed: ${signInError.message}`);
+        if (signUpError) {
+          throw new Error(`Signup failed: ${signUpError.message}`);
         }
-      } else if (signInData.user) {
+
+        if (signUpData.user && !signUpData.user.email_confirmed_at) {
+          toast({
+            title: "Check Your Email",
+            description: "Please check your email and click the confirmation link to complete registration.",
+          });
+          return;
+        }
+
+        if (signUpData.user) {
+          toast({
+            title: "Account Created Successfully",
+            description: "You can now access the admin panel.",
+          });
+          navigate('/admin/dashboard');
+          return;
+        }
+      }
+
+      if (signInData.user) {
         console.log("Login successful for user:", signInData.user.id);
         
         toast({
@@ -146,6 +145,9 @@ const AdminLogin = () => {
             <p>Default credentials:</p>
             <p>Email: agrikimaprototype6@gmail.com</p>
             <p>Password: Insideout.co.ke(1906)</p>
+            <div className="mt-2 text-xs text-blue-600">
+              Note: You may need to confirm your email address for first-time login
+            </div>
           </div>
         </CardContent>
       </Card>
