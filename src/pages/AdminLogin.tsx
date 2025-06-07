@@ -22,7 +22,6 @@ const AdminLogin = () => {
     try {
       console.log("Attempting login with email:", email);
       
-      // Try to sign in first
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -31,7 +30,6 @@ const AdminLogin = () => {
       console.log("SignIn result:", { signInData, signInError });
 
       if (signInError) {
-        // If login fails, try to sign up
         if (signInError.message.includes('Invalid login credentials')) {
           console.log("Login failed, attempting signup...");
           
@@ -52,7 +50,6 @@ const AdminLogin = () => {
               description: "Admin account created successfully. You can now login.",
             });
             
-            // Now try to login again
             const { data: retrySignIn, error: retryError } = await supabase.auth.signInWithPassword({
               email,
               password,
@@ -71,7 +68,6 @@ const AdminLogin = () => {
           throw new Error(`Login failed: ${signInError.message}`);
         }
       } else if (signInData.user) {
-        // Login was successful
         console.log("Login successful for user:", signInData.user.id);
         
         toast({
@@ -94,17 +90,17 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-700 to-stone-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-700 to-slate-800 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/20"></div>
       
-      <Card className="w-full max-w-md relative z-10 border-green-200 shadow-2xl">
+      <Card className="w-full max-w-md relative z-10 border-blue-200 shadow-2xl">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="bg-green-100 p-3 rounded-full">
-              <Shield className="w-8 h-8 text-green-600" />
+            <div className="bg-blue-100 p-3 rounded-full">
+              <Shield className="w-8 h-8 text-blue-600" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold text-green-800 flex items-center justify-center gap-2">
+          <CardTitle className="text-2xl font-bold text-blue-800 flex items-center justify-center gap-2">
             <Leaf className="w-6 h-6" />
             Agrikima Admin
           </CardTitle>
@@ -122,7 +118,7 @@ const AdminLogin = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="border-green-200 focus:border-green-500"
+                className="border-blue-200 focus:border-blue-500"
                 placeholder="agrikimaprototype6@gmail.com"
               />
             </div>
@@ -134,19 +130,19 @@ const AdminLogin = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="border-green-200 focus:border-green-500"
+                className="border-blue-200 focus:border-blue-500"
               />
             </div>
             <Button 
               type="submit" 
-              className="w-full bg-green-600 hover:bg-green-700"
+              className="w-full bg-blue-600 hover:bg-blue-700"
               disabled={loading}
             >
               {loading ? "Authenticating..." : "Sign In"}
             </Button>
           </form>
           
-          <div className="mt-4 text-center text-sm text-stone-600">
+          <div className="mt-4 text-center text-sm text-slate-600">
             <p>Default credentials:</p>
             <p>Email: agrikimaprototype6@gmail.com</p>
             <p>Password: Insideout.co.ke(1906)</p>

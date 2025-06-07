@@ -37,13 +37,13 @@ const ProductHighlights = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-green-50/80 to-stone-50/80 backdrop-blur-sm">
+    <section className="py-20 bg-gradient-to-b from-blue-50/80 to-slate-50/80 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-green-800 mb-4">
+          <h2 className="text-4xl font-bold text-blue-800 mb-4">
             Our Flagship Products
           </h2>
-          <p className="text-xl text-stone-600 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Over 90 high-quality products designed to revolutionize animal health and crop management
           </p>
         </div>
@@ -57,23 +57,23 @@ const ProductHighlights = () => {
                   alt={product.name}
                   className="w-full h-48 object-cover"
                 />
-                <div className="absolute top-4 right-4 bg-stone-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                <div className="absolute top-4 right-4 bg-slate-800 text-white px-3 py-1 rounded-full text-sm font-semibold">
                   {product.category}
                 </div>
               </div>
               <CardHeader>
-                <CardTitle className="text-green-700 text-xl">{product.name}</CardTitle>
-                <CardDescription className="text-stone-600">
+                <CardTitle className="text-blue-700 text-xl">{product.name}</CardTitle>
+                <CardDescription className="text-slate-600">
                   {product.description}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-green-800">Key Benefits:</h4>
+                  <h4 className="font-semibold text-blue-800">Key Benefits:</h4>
                   <ul className="space-y-1">
                     {product.benefits.map((benefit, idx) => (
-                      <li key={idx} className="text-sm text-stone-600 flex items-center">
-                        <span className="text-green-500 mr-2">✓</span>
+                      <li key={idx} className="text-sm text-slate-600 flex items-center">
+                        <span className="text-blue-500 mr-2">✓</span>
                         {benefit}
                       </li>
                     ))}

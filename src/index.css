@@ -5,83 +5,83 @@
 
 @layer base {
   :root {
-    --background: 250 248 245;
-    --foreground: 41 50 31;
+    --background: 255 255 255;
+    --foreground: 0 0 0;
 
     --card: 255 255 255;
-    --card-foreground: 41 50 31;
+    --card-foreground: 0 0 0;
 
     --popover: 255 255 255;
-    --popover-foreground: 41 50 31;
+    --popover-foreground: 0 0 0;
 
-    --primary: 34 90 55;
+    --primary: 37 99 235;
     --primary-foreground: 255 255 255;
 
-    --secondary: 245 242 238;
-    --secondary-foreground: 41 50 31;
+    --secondary: 241 245 249;
+    --secondary-foreground: 0 0 0;
 
-    --muted: 248 245 241;
-    --muted-foreground: 120 113 108;
+    --muted: 248 250 252;
+    --muted-foreground: 100 116 139;
 
-    --accent: 245 242 238;
-    --accent-foreground: 41 50 31;
+    --accent: 241 245 249;
+    --accent-foreground: 0 0 0;
 
-    --destructive: 185 50 40;
+    --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
 
-    --border: 231 219 208;
-    --input: 231 219 208;
-    --ring: 34 90 55;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 37 99 235;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 250 248 245;
-    --sidebar-foreground: 41 50 31;
-    --sidebar-primary: 34 90 55;
+    --sidebar-background: 255 255 255;
+    --sidebar-foreground: 0 0 0;
+    --sidebar-primary: 37 99 235;
     --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 245 242 238;
-    --sidebar-accent-foreground: 41 50 31;
-    --sidebar-border: 231 219 208;
-    --sidebar-ring: 34 90 55;
+    --sidebar-accent: 241 245 249;
+    --sidebar-accent-foreground: 0 0 0;
+    --sidebar-border: 226 232 240;
+    --sidebar-ring: 37 99 235;
   }
 
   .dark {
-    --background: 25 35 25;
-    --foreground: 240 250 240;
+    --background: 15 23 42;
+    --foreground: 248 250 252;
 
-    --card: 30 40 30;
-    --card-foreground: 240 250 240;
+    --card: 30 41 59;
+    --card-foreground: 248 250 252;
 
-    --popover: 30 40 30;
-    --popover-foreground: 240 250 240;
+    --popover: 30 41 59;
+    --popover-foreground: 248 250 252;
 
-    --primary: 50 150 100;
+    --primary: 59 130 246;
     --primary-foreground: 255 255 255;
 
-    --secondary: 35 45 35;
-    --secondary-foreground: 240 250 240;
+    --secondary: 51 65 85;
+    --secondary-foreground: 248 250 252;
 
-    --muted: 35 45 35;
-    --muted-foreground: 150 160 150;
+    --muted: 51 65 85;
+    --muted-foreground: 148 163 184;
 
-    --accent: 35 45 35;
-    --accent-foreground: 240 250 240;
+    --accent: 51 65 85;
+    --accent-foreground: 248 250 252;
 
-    --destructive: 200 60 50;
+    --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
 
-    --border: 45 55 45;
-    --input: 45 55 45;
-    --ring: 50 150 100;
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 59 130 246;
     
-    --sidebar-background: 25 35 25;
-    --sidebar-foreground: 240 250 240;
-    --sidebar-primary: 50 150 100;
+    --sidebar-background: 15 23 42;
+    --sidebar-foreground: 248 250 252;
+    --sidebar-primary: 59 130 246;
     --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 35 45 35;
-    --sidebar-accent-foreground: 240 250 240;
-    --sidebar-border: 45 55 45;
-    --sidebar-ring: 50 150 100;
+    --sidebar-accent: 51 65 85;
+    --sidebar-accent-foreground: 248 250 252;
+    --sidebar-border: 51 65 85;
+    --sidebar-ring: 59 130 246;
   }
 }
 
@@ -95,18 +95,18 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
-  /* Agricultural theme enhancements - Green & Brown only */
+  /* Blue & White theme enhancements */
   .agricultural-pattern {
     background-image: 
-      radial-gradient(circle at 25% 25%, rgba(34, 90, 55, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(120, 113, 108, 0.08) 0%, transparent 50%);
+      radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(100, 116, 139, 0.08) 0%, transparent 50%);
   }
 
   .earth-gradient {
     background: linear-gradient(135deg, 
-      rgb(245, 242, 238) 0%, 
-      rgb(250, 248, 245) 50%, 
-      rgb(248, 245, 241) 100%);
+      rgb(248, 250, 252) 0%, 
+      rgb(255, 255, 255) 50%, 
+      rgb(241, 245, 249) 100%);
   }
 
   /* Smooth animations */
@@ -152,21 +152,21 @@
     }
   }
 
-  /* Agricultural card styling - Green & Brown theme only */
+  /* Blue & White card styling */
   .agricultural-card {
-    @apply bg-white/95 backdrop-blur-sm border border-green-200 shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply bg-white/95 backdrop-blur-sm border border-blue-200 shadow-lg hover:shadow-xl transition-all duration-300;
     background-image: 
-      linear-gradient(45deg, rgba(34, 90, 55, 0.03) 25%, transparent 25%),
-      linear-gradient(-45deg, rgba(34, 90, 55, 0.03) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, rgba(34, 90, 55, 0.03) 75%),
-      linear-gradient(-45deg, transparent 75%, rgba(34, 90, 55, 0.03) 75%);
+      linear-gradient(45deg, rgba(37, 99, 235, 0.03) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(37, 99, 235, 0.03) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(37, 99, 235, 0.03) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(37, 99, 235, 0.03) 75%);
     background-size: 20px 20px;
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   }
 
-  /* Enhanced button styles - Green & Brown only */
+  /* Enhanced button styles - Blue & White */
   .btn-agricultural {
-    @apply bg-gradient-to-r from-green-700 to-green-800 hover:from-green-800 hover:to-green-900;
+    @apply bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800;
     @apply text-white font-medium px-6 py-3 rounded-lg shadow-md hover:shadow-lg;
     @apply transition-all duration-200 transform hover:scale-105;
   }
@@ -174,24 +174,24 @@
   /* Background patterns */
   .organic-pattern {
     background-image: 
-      radial-gradient(circle at 1px 1px, rgba(34, 90, 55, 0.12) 1px, transparent 0);
+      radial-gradient(circle at 1px 1px, rgba(37, 99, 235, 0.12) 1px, transparent 0);
     background-size: 20px 20px;
   }
 }
 
-/* Custom scrollbar - Green & Brown theme */
+/* Custom scrollbar - Blue theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-stone-100;
+  @apply bg-slate-100;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-green-400 rounded-full;
+  @apply bg-blue-400 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-green-500;
+  @apply bg-blue-500;
 }
