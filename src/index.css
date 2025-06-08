@@ -6,43 +6,43 @@
 @layer base {
   :root {
     --background: 255 255 255;
-    --foreground: 0 0 0;
+    --foreground: 15 23 42;
 
     --card: 255 255 255;
-    --card-foreground: 0 0 0;
+    --card-foreground: 15 23 42;
 
     --popover: 255 255 255;
-    --popover-foreground: 0 0 0;
+    --popover-foreground: 15 23 42;
 
-    --primary: 34 197 94;
+    --primary: 15 118 110;
     --primary-foreground: 255 255 255;
 
-    --secondary: 241 245 249;
-    --secondary-foreground: 0 0 0;
+    --secondary: 248 250 252;
+    --secondary-foreground: 15 23 42;
 
     --muted: 248 250 252;
     --muted-foreground: 100 116 139;
 
-    --accent: 241 245 249;
-    --accent-foreground: 0 0 0;
+    --accent: 236 254 255;
+    --accent-foreground: 15 23 42;
 
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
 
     --border: 226 232 240;
     --input: 226 232 240;
-    --ring: 34 197 94;
+    --ring: 15 118 110;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     --sidebar-background: 255 255 255;
-    --sidebar-foreground: 0 0 0;
-    --sidebar-primary: 34 197 94;
+    --sidebar-foreground: 15 23 42;
+    --sidebar-primary: 15 118 110;
     --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 241 245 249;
-    --sidebar-accent-foreground: 0 0 0;
+    --sidebar-accent: 248 250 252;
+    --sidebar-accent-foreground: 15 23 42;
     --sidebar-border: 226 232 240;
-    --sidebar-ring: 34 197 94;
+    --sidebar-ring: 15 118 110;
   }
 
   .dark {
@@ -55,8 +55,8 @@
     --popover: 30 41 59;
     --popover-foreground: 248 250 252;
 
-    --primary: 34 197 94;
-    --primary-foreground: 255 255 255;
+    --primary: 56 178 172;
+    --primary-foreground: 15 23 42;
 
     --secondary: 51 65 85;
     --secondary-foreground: 248 250 252;
@@ -72,16 +72,16 @@
 
     --border: 51 65 85;
     --input: 51 65 85;
-    --ring: 34 197 94;
+    --ring: 56 178 172;
     
     --sidebar-background: 15 23 42;
     --sidebar-foreground: 248 250 252;
-    --sidebar-primary: 34 197 94;
-    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-primary: 56 178 172;
+    --sidebar-primary-foreground: 15 23 42;
     --sidebar-accent: 51 65 85;
     --sidebar-accent-foreground: 248 250 252;
     --sidebar-border: 51 65 85;
-    --sidebar-ring: 34 197 94;
+    --sidebar-ring: 56 178 172;
   }
 }
 
@@ -95,39 +95,39 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
-  /* Green & Brown theme enhancements */
-  .agricultural-pattern {
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(120, 113, 108, 0.08) 0%, transparent 50%);
+  /* Professional gradient backgrounds */
+  .professional-gradient {
+    background: linear-gradient(135deg, 
+      rgb(248, 250, 252) 0%, 
+      rgb(241, 245, 249) 50%, 
+      rgb(236, 254, 255) 100%);
   }
 
-  .earth-gradient {
+  .hero-gradient {
     background: linear-gradient(135deg, 
-      rgb(254, 252, 232) 0%, 
-      rgb(255, 255, 255) 50%, 
-      rgb(245, 245, 244) 100%);
+      rgba(15, 118, 110, 0.05) 0%, 
+      rgba(56, 178, 172, 0.03) 100%);
   }
 
   /* Smooth animations */
   .animate-fade-in {
-    animation: fadeIn 0.8s ease-out;
+    animation: fadeIn 0.6s ease-out;
   }
 
-  .animate-slide-in-right {
-    animation: slideInRight 0.6s ease-out;
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 100ms;
   }
 
   .animation-delay-200 {
     animation-delay: 200ms;
   }
 
-  .animation-delay-400 {
-    animation-delay: 400ms;
-  }
-
-  .animation-delay-600 {
-    animation-delay: 600ms;
+  .animation-delay-300 {
+    animation-delay: 300ms;
   }
 
   @keyframes fadeIn {
@@ -141,57 +141,58 @@
     }
   }
 
-  @keyframes slideInRight {
+  @keyframes slideUp {
     from {
       opacity: 0;
-      transform: translateX(30px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateY(0);
     }
   }
 
-  /* Green & Brown card styling */
-  .agricultural-card {
-    @apply bg-white/95 backdrop-blur-sm border border-green-200 shadow-lg hover:shadow-xl transition-all duration-300;
-    background-image: 
-      linear-gradient(45deg, rgba(34, 197, 94, 0.03) 25%, transparent 25%),
-      linear-gradient(-45deg, rgba(34, 197, 94, 0.03) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, rgba(34, 197, 94, 0.03) 75%),
-      linear-gradient(-45deg, transparent 75%, rgba(34, 197, 94, 0.03) 75%);
-    background-size: 20px 20px;
-    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  /* Professional card styling */
+  .professional-card {
+    @apply bg-card/95 backdrop-blur-sm border border-border shadow-sm hover:shadow-md transition-all duration-300;
   }
 
-  /* Enhanced button styles - Green & Brown */
-  .btn-agricultural {
-    @apply bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800;
-    @apply text-white font-medium px-6 py-3 rounded-lg shadow-md hover:shadow-lg;
-    @apply transition-all duration-200 transform hover:scale-105;
+  /* Enhanced button styles */
+  .btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground;
+    @apply font-medium px-6 py-3 rounded-md shadow-sm hover:shadow-md;
+    @apply transition-all duration-200 hover:scale-105;
   }
 
-  /* Background patterns */
-  .organic-pattern {
-    background-image: 
-      radial-gradient(circle at 1px 1px, rgba(34, 197, 94, 0.12) 1px, transparent 0);
-    background-size: 20px 20px;
+  .btn-secondary {
+    @apply bg-secondary hover:bg-secondary/80 text-secondary-foreground;
+    @apply border border-border font-medium px-6 py-3 rounded-md;
+    @apply transition-all duration-200 hover:shadow-sm;
+  }
+
+  /* Section spacing */
+  .section-padding {
+    @apply py-16 lg:py-24;
+  }
+
+  .container-width {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
 
-/* Custom scrollbar - Green theme */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-stone-100;
+  @apply bg-muted;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-green-400 rounded-full;
+  @apply bg-primary/50 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-green-500;
+  @apply bg-primary/70;
 }

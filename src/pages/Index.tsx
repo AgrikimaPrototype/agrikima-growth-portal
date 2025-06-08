@@ -34,15 +34,15 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen earth-gradient agricultural-pattern">
+    <div className="min-h-screen professional-gradient">
       <Navigation />
       
-      {/* Dynamic Background with rotating images */}
+      {/* Subtle Background with rotating images */}
       <div className="fixed inset-0 z-0">
         {/* Background Video */}
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover opacity-10"
+          className="absolute inset-0 w-full h-full object-cover opacity-5"
           autoPlay
           muted
           loop
@@ -59,7 +59,7 @@ const Index = () => {
           <div
             key={index}
             className={`absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-opacity duration-2000 ${
-              index === currentImageIndex ? 'opacity-20' : 'opacity-0'
+              index === currentImageIndex ? 'opacity-10' : 'opacity-0'
             }`}
             style={{
               backgroundImage: `url('${image}')`
@@ -67,24 +67,21 @@ const Index = () => {
           />
         ))}
 
-        {/* Enhanced overlay for better text readability - green and brown only */}
-        <div className="absolute inset-0 bg-gradient-to-b from-green-900/20 via-transparent to-stone-900/20"></div>
-        
-        {/* Agricultural pattern overlay */}
-        <div className="absolute inset-0 organic-pattern opacity-30"></div>
+        {/* Subtle overlay for better readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/80"></div>
       </div>
 
       <div className="relative z-10">
         <div className="animate-fade-in">
           <HeroSection />
         </div>
-        <div className="animate-fade-in animation-delay-200">
+        <div className="animate-fade-in animation-delay-100">
           <CompanyOverview />
         </div>
-        <div className="animate-fade-in animation-delay-400">
+        <div className="animate-fade-in animation-delay-200">
           <ProductHighlights />
         </div>
-        <div className="animate-fade-in animation-delay-600">
+        <div className="animate-fade-in animation-delay-300">
           <ImpactMetrics />
         </div>
         <Footer />
