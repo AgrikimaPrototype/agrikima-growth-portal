@@ -67,8 +67,8 @@ const Index = () => {
           />
         ))}
 
-        {/* Enhanced overlay for better text readability - blue and black only */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-transparent to-slate-900/20"></div>
+        {/* Enhanced overlay for better text readability - green and brown only */}
+        <div className="absolute inset-0 bg-gradient-to-b from-green-900/20 via-transparent to-stone-900/20"></div>
         
         {/* Agricultural pattern overlay */}
         <div className="absolute inset-0 organic-pattern opacity-30"></div>

@@ -10,13 +10,13 @@ const ImpactMetrics = () => {
   ];
 
   return (
-    <section className="py-20 bg-blue-800 text-white">
+    <section className="py-20 bg-green-800 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 text-white">
             Our Impact in Numbers
           </h2>
-          <p className="text-xl text-blue-200 max-w-3xl mx-auto">
+          <p className="text-xl text-green-200 max-w-3xl mx-auto">
             Transforming agriculture across Africa and beyond through innovation and dedication
           </p>
         </div>
@@ -30,18 +30,18 @@ const ImpactMetrics = () => {
               <div className="text-3xl font-bold text-white mb-2">
                 {metric.value}
               </div>
-              <div className="text-sm text-blue-200">
+              <div className="text-sm text-green-200">
                 {metric.label}
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-16 bg-blue-700 rounded-lg p-8 text-center">
+        <div className="mt-16 bg-green-700 rounded-lg p-8 text-center">
           <h3 className="text-2xl font-bold text-white mb-4">
             The Future of Sustainable Agriculture
           </h3>
-          <p className="text-lg text-blue-200 max-w-4xl mx-auto">
+          <p className="text-lg text-green-200 max-w-4xl mx-auto">
             Looking ahead 5-10 years, we plan to significantly contribute to animal health and crop industries by 
             improving food safety, farm productivity, and animal welfare while reducing antimicrobial resistance.
           </p>
