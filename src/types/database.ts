@@ -49,3 +49,38 @@ export interface AdminUser {
   is_active: boolean;
   created_at: string;
 }
+
+// Form data interfaces for better type safety
+export interface ProductFormData {
+  name: string;
+  category: string;
+  description: string;
+  usage: string;
+  benefits: string;
+  packaging: string;
+  price: string;
+  image: string;
+}
+
+export interface ReplyFormData {
+  content: string;
+  is_admin_reply?: boolean;
+}
+
+// API response interfaces
+export interface ApiResponse<T> {
+  data: T | null;
+  error: string | null;
+}
+
+export interface PaginationMeta {
+  page: number;
+  limit: number;
+  total: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
+
+export interface PaginatedResponse<T> extends ApiResponse<T[]> {
+  meta: PaginationMeta;
+}
